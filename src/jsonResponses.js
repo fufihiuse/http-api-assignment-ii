@@ -1,3 +1,5 @@
+const users = {};
+
 // Returns a JSON response
 const respond = (request, response, content, status) => {
   // set status code and content
@@ -24,6 +26,21 @@ const notFound = (request, response) => {
   return respond(request, response, responseString, status);
 };
 
+const badRequest = (request, response) => {
+  const responseObj = {
+    message: 'Bad Request!',
+    id: 'badRequest',
+  };
+  const status = 400;
+
+  const responseString = JSON.stringify(responseObj);
+  return respond(request, response, responseString, status);
+};
+
+const addUser = (request, response) => badRequest(request, response);
+
 module.exports = {
   notFound,
+  addUser,
+  badRequest,
 };
