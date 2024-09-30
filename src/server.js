@@ -11,6 +11,7 @@ const urlStruct = {
   '/bundle.js': htmlHandler.getJS,
   '/': htmlHandler.getIndex,
   '/addUser': jsonHandler.addUser,
+  '/getUsers': jsonHandler.getUsers,
   index: htmlHandler.getIndex,
   notFound: jsonHandler.notFound,
 };
@@ -59,7 +60,7 @@ const onRequest = (request, response) => {
 
   if (request.method === 'POST') {
     handlePost(request, response, parsedURL);
-  } else if (request.method === 'GET') {
+  } else {
     handleGet(request, response, parsedURL);
   }
 };
