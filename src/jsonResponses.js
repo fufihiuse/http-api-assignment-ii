@@ -2,7 +2,7 @@ const users = {};
 
 // Returns a JSON response
 const respond = (request, response, content, status) => {
-  let body = {};
+  let body = '';
   if (content) {
     body = content;
   }
