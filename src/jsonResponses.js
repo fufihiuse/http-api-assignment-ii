@@ -1,7 +1,4 @@
-const users = {
-  name: 'Joe',
-  age: 12,
-};
+const users = {};
 
 // Returns a JSON response
 const respond = (request, response, content, status) => {
@@ -9,8 +6,6 @@ const respond = (request, response, content, status) => {
   if (content) {
     body = content;
   }
-
-  console.log(request.method);
 
   // set status code and content
   response.writeHead(status, {
@@ -55,7 +50,35 @@ const getUsers = (request, response) => {
   return respond(request, response, JSON.stringify(responseJson), 200);
 };
 
-const addUser = (request, response) => badRequest(request, response);
+const addUser = (request, response) => {
+  const responseJSON = {
+    message: 'Name and age are both required.',
+  };
+
+  const { name, age } = request.body;
+
+  if (!name || !age) {
+    responseJSON.id = 'missingParams';
+    return respond(request, response, JSON.stringify(responseJSON), 400);
+  }
+
+  let status = 204;
+
+  if (!users[name]) {
+    status = 201;
+    users[name] = {};
+  }
+
+  users[name].name = name;
+  users[name].age = age;
+
+  if (status === 201) {
+    responseJSON.message = 'User Created Successfully!';
+    return respond(request, response, JSON.stringify(responseJSON), status);
+  }
+
+  return respond(request, response, '', status);
+};
 
 module.exports = {
   notFound,

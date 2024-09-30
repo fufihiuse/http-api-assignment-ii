@@ -14,6 +14,9 @@ const handleResponse = async (response) => {
     case 400:
       content.innerHTML = '<b>Bad Request</b>';
       break;
+    case 404:
+      content.innerHTML = '<b>Page Not Found!</b>';
+      break;
     default:
       content.innerHTML = 'Error code not implemented by client.';
       break;
@@ -22,15 +25,18 @@ const handleResponse = async (response) => {
   if (obj.message) {
     content.innerHTML += `<p>${obj.message}</p>`;
   }
+  if (obj.users) {
+    console.log(obj.users);
+    content.innerHTML += `<p>${JSON.stringify(obj.users)}</p>`;
+  }
 };
 
 const sendReq = async (userForm) => {
-  console.log(userForm);
   const nameAction = userForm.getAttribute('action');
   const nameMethod = userForm.getAttribute('method');
 
-  const name = userForm.querySelector('nameField');
-  const age = userForm.querySelector('ageField');
+  const name = userForm.querySelector('#nameField');
+  const age = userForm.querySelector('#ageField');
 
   const req = {
     method: nameMethod,
@@ -40,12 +46,10 @@ const sendReq = async (userForm) => {
     },
   };
 
-  if (nameMethod === 'POST') {
+  if (nameMethod.toUpperCase() === 'POST') {
     const formData = `name=${name.value}&age=${age.value}`;
     req.body = formData;
   }
-
-  console.log(req);
 
   const response = await fetch(nameAction, req);
   handleResponse(response);

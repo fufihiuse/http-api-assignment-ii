@@ -32,9 +32,9 @@ const parseBody = (request, response, handler) => {
   request.on('end', () => {
     const bodyString = Buffer.concat(body).toString();
     request.body = query.parse(bodyString);
-  });
 
-  handler(request, response);
+    handler(request, response);
+  });
 };
 
 const handlePost = (request, response, parsedURL) => {
