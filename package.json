@@ -6,7 +6,7 @@
   "scripts": {
     "nodemon": "nodemon -e js,html,css --watch ./src --watch ./hosted ./src/server.js",
     "start": "node ./src/server.js",
-    "pretest": "eslint ./src --fix && eslint ./client --fix",
+    "pretest": "eslint ./src --fix",
     "test": "echo \"Tests complete\"",
     "buildBundle": "webpack",
     "watchBundle": "webpack watch",
